@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Day2 {
 
     public FileReader reader = new FileReader();
-    static String filename = "aoc_2021\\src\\main\\day2.txt";
+    static String filename = "aoc_2021\\src\\main\\data\\day2.txt";
     ArrayList<String> commands = reader.getValuesAsStrings(filename);
 
     /**

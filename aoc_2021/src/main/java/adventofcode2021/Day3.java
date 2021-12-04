@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Day3 {
     public FileReader reader = new FileReader();
-    static String filename = "aoc_2021\\src\\main\\day3_testdata.txt";
+    static String filename = "aoc_2021\\src\\main\\data\\day3_testdata.txt";
     ArrayList<String> commands = reader.getValuesAsStrings(filename);
     int cmdLength = commands.get(0).length();
 

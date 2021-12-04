@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Day1 {
 
     public FileReader reader = new FileReader();
-    static String sonarDepthsFileName = "aoc_2021\\src\\main\\day1.txt";
+    static String sonarDepthsFileName = "aoc_2021\\src\\main\\data\\day1.txt";
     ArrayList<Integer> measurements = reader.getValuesAsIntegers(sonarDepthsFileName);
 
     // Part 1
