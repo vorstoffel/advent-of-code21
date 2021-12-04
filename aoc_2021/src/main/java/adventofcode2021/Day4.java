@@ -15,9 +15,25 @@ public class Day4 {
 
     public void PlayBingo() {
         numbers = GetNumbers();
+        PrintNumbers();
         boards = GetBoards();
         PrintBoards(boards);
+        DrawNumber();
+        PrintNumbers();
+    }
 
+    private void DrawNumber() {
+        int number = numbers.get(0);
+        numbers.remove(0);
+
+    }
+
+    private void PrintNumbers() {
+        System.out.print("Remaining numbers: ");
+        for (int i : numbers) {
+            System.out.print(i + ", ");
+        }
+        System.out.println();
     }
 
     private void PrintBoards(ArrayList<BingoField[][]> boards) {
@@ -25,7 +41,10 @@ public class Day4 {
             for (int j = 0; j < 5; j++) {
                 for (int i = 0; i < 5; i++) {
                     int num = bingoFields[j][i].getNumber();
-                    System.out.print(" " + num);
+                    if (bingoFields[j][i].getMarked())
+                        System.out.print(" {" + num + "} ");
+                    else
+                        System.out.print(" " + num + " ");
                 }
                 System.out.println();
             }
