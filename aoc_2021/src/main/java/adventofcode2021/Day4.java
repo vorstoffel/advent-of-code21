@@ -17,22 +17,19 @@ public class Day4 {
         numbers = GetNumbers();
         boards = GetBoards();
         PrintBoards(boards);
-    }
 
-    private int GetRandomNumber() {
-        // TODO: pick a random number out of "numbers"
-        return 1;
     }
 
     private void PrintBoards(ArrayList<BingoField[][]> boards) {
         for (BingoField[][] bingoFields : boards) {
             for (int j = 0; j < 5; j++) {
                 for (int i = 0; i < 5; i++) {
-                    System.out.print(" " + bingoFields[j][i].getNumber());
+                    int num = bingoFields[j][i].getNumber();
+                    System.out.print(" " + num);
                 }
                 System.out.println();
             }
-            System.out.println("end of board");
+            System.out.println();
         }
     }
 
@@ -40,24 +37,22 @@ public class Day4 {
         try {
             File myObj = new File(filename);
             Scanner sc = new Scanner(myObj);
-
             boards = new ArrayList<BingoField[][]>();
-            BingoField[][] tmpBoard = new BingoField[5][5];
-            BingoField tmpField = new BingoField();
 
             int ignoreLine = 1;
-            while (sc.hasNextLine() && ignoreLine < 8) {
+            while (sc.hasNextLine()) {
                 ignoreLine++;
                 sc.nextLine();
+                BingoField[][] tmpBoard = new BingoField[5][5];
 
                 if (ignoreLine >= 3) {
                     for (int j = 0; j < 5; j++) {
                         for (int i = 0; i < 5; i++) {
                             int number = sc.nextInt();
+                            BingoField tmpField = new BingoField();
                             tmpField.setNumber(number);
                             tmpField.setMarked(false);
                             tmpBoard[j][i] = tmpField;
-                            // System.out.print(" " + tmpBoard[j][i].getNumber());
                         }
                         System.out.println();
                         if (sc.hasNextLine())
@@ -65,7 +60,6 @@ public class Day4 {
                         else
                             break;
                     }
-                    // System.out.println("end of board");
                     boards.add(tmpBoard);
                 }
             }
