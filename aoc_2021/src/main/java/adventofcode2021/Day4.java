@@ -11,21 +11,83 @@ public class Day4 {
     static String filename = "aoc_2021\\src\\main\\data\\day4_testdata.txt";
 
     ArrayList<Integer> numbers;
+    int currentMarkingNumber;
     ArrayList<BingoField[][]> boards;
+    BingoField[][] winnerBoard = new BingoField[5][5];
 
     public void PlayBingo() {
         numbers = GetNumbers();
-        PrintNumbers();
         boards = GetBoards();
-        PrintBoards(boards);
-        DrawNumber();
-        PrintNumbers();
+
+        while (!IsBingo()) {
+            PlayOneRoundWith(DrawNumber());
+            PrintNumbers();
+            PrintBoards(boards);
+
+            /*
+             * System.out.println("Press any key to play next round... ");
+             * try {
+             * System.in.read();
+             * } catch (Exception e) {
+             * e.printStackTrace();
+             * }
+             */
+
+            if (IsBingo()) {
+                int solution = GetSumOfUnmarkedNumbersOf(winnerBoard) * currentMarkingNumber;
+                System.out.println("Bingo  " + solution + " !");
+            }
+        }
     }
 
-    private void DrawNumber() {
-        int number = numbers.get(0);
-        numbers.remove(0);
+    private int GetSumOfUnmarkedNumbersOf(BingoField[][] winnerBoard) {
+        int unmarkedSum = 0;
+        for (int j = 0; j < 5; j++) {
+            for (int i = 0; i < 5; i++) {
+                if (!winnerBoard[i][j].isMarked())
+                    unmarkedSum += winnerBoard[i][j].getNumber();
+            }
+        }
+        return unmarkedSum;
+    }
 
+    private boolean IsBingo() {
+        for (BingoField[][] bingoFields : boards) {
+            for (int j = 0; j < 5; j++) {
+                int markedRow = 0;
+                int markedColumn = 0;
+                for (int i = 0; i < 5; i++) {
+                    if (bingoFields[j][i].isMarked())
+                        markedRow++;
+                    if (bingoFields[i][j].isMarked())
+                        markedColumn++;
+                    if (markedRow >= 5 || markedColumn >= 5) {
+                        winnerBoard = bingoFields;
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private void PlayOneRoundWith(int drawnNumber) {
+        for (BingoField[][] bingoFields : boards) {
+            for (int j = 0; j < 5; j++) {
+                for (int i = 0; i < 5; i++) {
+                    int bingoNumber = bingoFields[j][i].getNumber();
+                    if (bingoNumber == drawnNumber)
+                        bingoFields[j][i].setMarked(true);
+                }
+            }
+        }
+    }
+
+    private int DrawNumber() {
+        currentMarkingNumber = numbers.get(0);
+        numbers.remove(0);
+        System.out.println("Number " + currentMarkingNumber + " is chosen.");
+        return currentMarkingNumber;
     }
 
     private void PrintNumbers() {
@@ -41,7 +103,7 @@ public class Day4 {
             for (int j = 0; j < 5; j++) {
                 for (int i = 0; i < 5; i++) {
                     int num = bingoFields[j][i].getNumber();
-                    if (bingoFields[j][i].getMarked())
+                    if (bingoFields[j][i].isMarked())
                         System.out.print(" {" + num + "} ");
                     else
                         System.out.print(" " + num + " ");

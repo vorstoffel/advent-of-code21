@@ -16,7 +16,7 @@ public class BingoField {
         this.marked = marked;
     }
 
-    public boolean getMarked() {
+    public boolean isMarked() {
         return marked;
     }
 }
