@@ -6,9 +6,10 @@ public class App {
 
     public static void main(String[] args) {
 
-        day4.PlayBingo();
-        // day2.Position();
+        day4.LoseBingo();
+        // day4.PlayBingo();
         // day3.BinaryDiagnostic();
+        // day2.Position();
         // day1.SlidingWindowIncreases();
         // day1.Increases();
 

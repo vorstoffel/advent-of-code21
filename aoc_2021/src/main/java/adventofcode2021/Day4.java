@@ -8,12 +8,34 @@ import java.util.Scanner;
 
 public class Day4 {
     public FileReader reader = new FileReader();
-    static String filename = "aoc_2021\\src\\main\\data\\day4_testdata.txt";
+    static String filename = "aoc_2021\\src\\main\\data\\day4.txt";
 
     ArrayList<Integer> numbers;
     int currentMarkingNumber;
     ArrayList<BingoField[][]> boards;
+    int indexOfWinner = 0;
     BingoField[][] winnerBoard = new BingoField[5][5];
+
+    public void LoseBingo() {
+        numbers = GetNumbers();
+        boards = GetBoards();
+
+        while (boards.size() >= 1) {
+            PlayOneRoundWith(DrawNumber());
+            // PrintNumbers();
+            // PrintBoards(boards);
+
+            if (boards.size() <= 1 && IsBingo()) {
+                int sumOfUnmarkedNums = GetSumOfUnmarkedNumbersOf(boards.get(0));
+                int worstBoard = sumOfUnmarkedNums * currentMarkingNumber;
+                System.out.println("Oh no I lost with " + worstBoard + " !");
+            }
+
+            while (IsBingo()) {
+                boards.remove(indexOfWinner);
+            }
+        }
+    }
 
     public void PlayBingo() {
         numbers = GetNumbers();
@@ -52,6 +74,7 @@ public class Day4 {
     }
 
     private boolean IsBingo() {
+        int indexOfWin = 0;
         for (BingoField[][] bingoFields : boards) {
             for (int j = 0; j < 5; j++) {
                 int markedRow = 0;
@@ -63,10 +86,12 @@ public class Day4 {
                         markedColumn++;
                     if (markedRow >= 5 || markedColumn >= 5) {
                         winnerBoard = bingoFields;
+                        indexOfWinner = indexOfWin;
                         return true;
                     }
                 }
             }
+            indexOfWin++;
         }
         return false;
     }
@@ -86,7 +111,7 @@ public class Day4 {
     private int DrawNumber() {
         currentMarkingNumber = numbers.get(0);
         numbers.remove(0);
-        System.out.println("Number " + currentMarkingNumber + " is chosen.");
+        // System.out.println("Number " + currentMarkingNumber + " is chosen.");
         return currentMarkingNumber;
     }
 
